@@ -17,6 +17,9 @@ Tutorial.new.show
 =end
 
 size = 2
+jugador1 = "X"
+jugador2 = "O"
+
 my_array = Array.new(size)
 
 for i in 0..size
@@ -26,22 +29,41 @@ for i in 0..size
     end
 end
 
-puts my_array
+for i in 0..9 
 
-puts "¿Qué posición deseas modificar en X?"
-positionX = Integer(gets.chomp)
+    if i % 2 != 0
+        puts i 
 
-puts "¿Qué posición deseas modificar en X?"
-positionY = Integer(gets.chomp)
+        puts "Posición en X Jugador 1: "
+        positionX = Integer(gets.chomp)    
 
-puts "¿Qué valor deseas agregar X ó O ?"
-response = gets.chomp
+        puts "Posición en Y Jugador 1: "
+        positionY = Integer(gets.chomp) 
+        
+        my_array[positionX][positionY] = jugador1
 
-my_array[positionX][positionY] = response
+        print my_array[0] 
+        puts "\n"
+        print my_array[1] 
+        puts "\n"
+        print my_array[2] 
+        puts "\n"
+    end
 
-print my_array[0] 
-puts "\n"
-print my_array[1] 
-puts "\n"
-print my_array[2] 
-puts "\n"
+    if i % 2 == 0
+        puts "Posición en X Jugador 2: "
+        positionX = Integer(gets.chomp)    
+
+        puts "Posición en Y Jugador 2: "
+        positionY = Integer(gets.chomp) 
+        
+        my_array[positionX][positionY] = jugador2
+
+        print my_array[0] 
+        puts "\n"
+        print my_array[1] 
+        puts "\n"
+        print my_array[2] 
+        puts "\n"
+    end
+end
