@@ -140,6 +140,7 @@ for i in 0...9
 
         if my_array[x][y] == "X" || my_array[x][y] == "O"
             puts "esta posicion ya esta en uso"
+            i = i - 1
         else
             my_array[x][y] = jugador1
         end
@@ -175,3 +176,4 @@ for i in 0...9
 
     tableros(my_array, size, my_reference)
 end
+
