@@ -21,49 +21,73 @@ jugador1 = "X"
 jugador2 = "O"
 
 my_array = Array.new(size)
+my_reference = [[1,2,3],[4,5,6],[7,8,9]]
 
+# Armamos array de referencia
 for i in 0..size
-    my_array[i] = Array.new(size)
+    print my_reference[i] 
+    puts "\n"
+end 
+
+# Llenamos matriz con 0
+for m in 0..size
+    my_array[m] = Array.new(size)
     for j in 0..size
-        my_array[i][j] = 0
+        my_array[m][j] = 0
     end
 end
 
-for i in 0..9 
+def getPosition(position, my_reference)
+    for f in 0..my_reference.size
+        for g in 0..my_reference.size
+            if my_reference[f][g] == position
+                return [f],[g]
+            end
+        end
+    end
+end
+
+for i in 0...9
+    if i % 2 == 0
+        puts "¿Posición jugador 1?"
+        position = Integer(gets.chomp)
+        
+        posiciones = getPosition(position, my_reference)
+
+        x = posiciones[0][0] 
+        y = posiciones[1][0]
+
+        if my_array[x][y] == "X" || my_array[x][y] == "O"
+            puts "esta posicion ya esta en uso"
+        else
+            my_array[x][y] = jugador1
+        end
+    end
 
     if i % 2 != 0
-        puts i 
-
-        puts "Posición en X Jugador 1: "
-        positionX = Integer(gets.chomp)    
-
-        puts "Posición en Y Jugador 1: "
-        positionY = Integer(gets.chomp) 
+        puts "¿Posición jugador 2?"
+        position = Integer(gets.chomp)
         
-        my_array[positionX][positionY] = jugador1
+        posiciones = getPosition(position, my_reference)
 
-        print my_array[0] 
-        puts "\n"
-        print my_array[1] 
-        puts "\n"
-        print my_array[2] 
-        puts "\n"
+        x = posiciones[0][0] 
+        y = posiciones[1][0]
+
+        if my_array[x][y] == "X" || my_array[x][y] == "O"
+            puts "esta posicion ya esta en uso"
+        else
+            my_array[x][y] = jugador2
+        end
     end
 
-    if i % 2 == 0
-        puts "Posición en X Jugador 2: "
-        positionX = Integer(gets.chomp)    
+    for l in 0..my_array.size
+        print my_array[l] 
+        puts "\n"
+    end 
+    
+    puts i
+end
 
-        puts "Posición en Y Jugador 2: "
-        positionY = Integer(gets.chomp) 
-        
-        my_array[positionX][positionY] = jugador2
-
-        print my_array[0] 
-        puts "\n"
-        print my_array[1] 
-        puts "\n"
-        print my_array[2] 
-        puts "\n"
-    end
+def evaluarGanador
+    
 end
