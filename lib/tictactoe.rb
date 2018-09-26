@@ -5,14 +5,13 @@
     createdby: Fernando Amezcua Alcantar
     TODO: 
 
-
 =end
 
 class Tictactoe
 
     # Armamos array de referencia
-    def tableroReferencia(size, my_reference)
-        for i in 0..size
+    def tableroReferencia(my_reference)
+        for i in 0..2
             print my_reference[i] 
             puts "\n"
         end 
@@ -29,7 +28,7 @@ class Tictactoe
         end
     end
 
-    def evaluarGanador(jugador, my_array)
+    def evaluarGanador(jugador, my_array, i)
         
         # EVALUAR GANADOR HORIZONTAL
         # Linea 1
@@ -89,9 +88,17 @@ class Tictactoe
                 return jugador
             end
         end
+
+        if i === 9
+            puts "*************************************"
+            puts "************   EMPATE   *************"
+            puts "*************************************"
+            play
+        end
+
     end
 
-    def tableros(my_array, size, my_reference)
+    def tableros(my_array, my_reference)
         puts "\n"
         puts "----- TABLERO ACTUAL ------"
 
@@ -102,12 +109,12 @@ class Tictactoe
         
         #puts i
         puts "-------- REFERENCIA --------"
-            puts tableroReferencia(size, my_reference)
+            tableroReferencia(my_reference)
         puts "----------------------------"
     end
     
     # Clase que inicia el juego 
-    def game
+    def game(respuesta)
 
         size = 2
         jugador1 = "X"
@@ -116,7 +123,7 @@ class Tictactoe
         my_array = Array.new(size)
         my_reference = [[1,2,3],[4,5,6],[7,8,9]]
 
-        tableroReferencia(size, my_reference)
+        tableroReferencia(my_reference)
          
         # Llenamos matriz con 0
         for m in 0..size
@@ -133,10 +140,14 @@ class Tictactoe
             #Los numeros primos son para el jugador 1
             if i % 2 != 0
                 puts "¿Posición jugador 1?"
-                position = gets.to_i
+                
+                if respuesta == "test"
+                    position = rand(1..12)
+                else
+                    position = gets.to_i
+                end
 
-                puts position
-                if position <= 9 && position != 0
+                if position.between?(1,9)
                     posiciones = getPosition(position, my_reference)
 
                     x = posiciones[0][0] 
@@ -148,14 +159,16 @@ class Tictactoe
                         my_array[x][y] = jugador1
 
                         # Mostramos tablero con los resultados
-                        tableros(my_array, size, my_reference)
+                        tableros(my_array, my_reference)
 
                         i += 1
                     end
 
-                    if evaluarGanador(jugador1, my_array) == jugador1
-                        tableros(my_array, size, my_reference)
-                        puts "EL GANADOR ES #{jugador1}"
+                    if evaluarGanador(jugador1, my_array, i) == jugador1
+                        tableros(my_array, my_reference)
+                        puts "*************************************"
+                        puts "***** EL GANADOR ES #{jugador1} *****"
+                        puts "*************************************"
                         play
                         break
                     end
@@ -167,10 +180,14 @@ class Tictactoe
             #Los numeros pares son para el jugador 1
             if i % 2 == 0
                 puts "¿Posición jugador 2?"
-                position = gets.chomp.to_i
+               
+                if respuesta == "test"
+                    position = rand(1..12)
+                else
+                    position = gets.to_i
+                end
 
-                puts position
-                if position <= 9 && position != 0
+                if position.between?(1,9)
                     posiciones = getPosition(position, my_reference)
 
                     x = posiciones[0][0] 
@@ -182,47 +199,44 @@ class Tictactoe
                         my_array[x][y] = jugador2
                         
                         # Mostramos tablero con los resultados
-                        tableros(my_array, size, my_reference)
+                        tableros(my_array, my_reference)
 
                         i += 1
                     end
 
-                    if evaluarGanador(jugador2, my_array) == jugador2
-                        tableros(my_array, size, my_reference)
-                        puts "EL GANADOR ES #{jugador2}"
+                    if evaluarGanador(jugador2, my_array, i) == jugador2
+                        tableros(my_array, my_reference)
+                        puts "*************************************"
+                        puts "***** EL GANADOR ES #{jugador2} *****"
+                        puts "*************************************"
                         play
                         break
                     end
                 else
                     puts "SELECCIONA UN NÚMERO DEL 1 AL 9"
                 end
-            end
-
-            if i === 9
-                puts "EMPATE"
-                play
-            end
-            
+            end            
         end
 
         play
     end
+
+    def play
+        
+        puts "¿Deseas iniciar el juego (s/n/test): "
+        respuesta = gets.chomp 
+                       
+        case respuesta 
+        when "n"
+            puts "¡No te vayas :(!"
+            return
+        when "s", "test"
+            Tictactoe.new.game(respuesta)
+        else 
+            puts "Debes seleccionar al menos una opción"
+            play
+        end
+
+    end
 end
 
-def play
-    puts "¿Deseas iniciar el juego? 's' o salir 'n'"
-    respuesta = gets.chomp
-
-    if respuesta == "s"
-        Tictactoe.new.game
-    elsif respuesta == "n"
-        puts "¡No te vayas :(!"
-    end
-    
-    if respuesta != "s" || respuesta != "n"
-        puts "Debes seleccionar al menos una opción"
-        play
-    end
-end
-
-play
