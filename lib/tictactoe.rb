@@ -240,3 +240,4 @@ class Tictactoe
     end
 end
 
+Tictactoe.new.play
